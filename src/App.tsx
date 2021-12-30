@@ -1,13 +1,7 @@
 import React from 'react';
-import './App.scss';
-import Todo from './page/Todo/Todo';
+import MainLayout from "./layouts/MainLayout";
 
-const App = () => {
-    return (
-        <div>
-            <Todo />
-        </div>
-    )
-}
+const App = () => ( <MainLayout/>)
+
 
 export default App;
