@@ -29,7 +29,7 @@ export const todoSlice = createSlice({
             state.users = [...state.users, ...action.payload]
 
         },
-        [requestUsers.pending.type]: (state, action: PayloadAction<any>) => {
+        [requestUsers.pending.type]: (state, action: PayloadAction<boolean>) => {
             state.loading = true
         },
         [requestUsers.rejected.type]: (state, action: PayloadAction<string>) => {
@@ -42,7 +42,7 @@ export const todoSlice = createSlice({
             state.error = ''
             state.todos=[...state.todos, ...action.payload]
         },
-        [requestTodos.pending.type]: (state, action: PayloadAction<any>) => {
+        [requestTodos.pending.type]: (state, action: PayloadAction<boolean>) => {
             state.loading = true
         },
         [requestTodos.rejected.type]: (state, action: PayloadAction<string>) => {

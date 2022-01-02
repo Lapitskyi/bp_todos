@@ -1,29 +1,30 @@
-import React, {FC, useEffect, useMemo, useState} from "react";
+import React, {FC, useEffect, useMemo, useState, ChangeEvent} from "react";
 import {requestUsers, requestTodos} from "../../redux/todoActions";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import List from "./components/List";
+import Boards from "./components/Boards";
 
-import './css/Todo.scss'
 import {IUsers} from "../../models/IUsers";
 import {ITodo} from "../../models/ITodo";
-import {log} from "util";
+import './css/Todo.scss'
 
-interface TodoProps {
+interface ITogle {
+    toggle: boolean,
+    setToggle: (toggle: boolean) => void
 }
 
-const Todo: FC<TodoProps> = () => {
-    const [toggle, setToggle] = useState(false)
+const Todo = () => {
+    const [toggle, setToggle] = useState<boolean>(false)
     const dispatch = useAppDispatch()
-
     const {users, todos, loading, error} = useAppSelector(state => state.todoReducers)
 
-    const usersMemo = useMemo(() => {
-        return users.map((user) => {
+    const todosMemo = useMemo(() => {
+        return todos.map((todo: ITodo) => {
             return {
-                ...user,
-                todos: todos.filter(todo => {
-                    if (todo.userId === user.id) {
-                        return todo
+                ...todo,
+                user: users.find((user: IUsers) => {
+                    if (user.id === todo.userId) {
+                        return user
                     }
                 })
             }
@@ -38,10 +39,13 @@ const Todo: FC<TodoProps> = () => {
 
     return (
         <div className='todo'>
+            <input type="checkbox" checked={toggle}
+                   onChange={(e: ChangeEvent<HTMLInputElement>) => setToggle(e.target.checked)}/>
             <div className='container'>
-
-                <List users={usersMemo} loading={loading}/>
-
+                {toggle
+                    ? < List todos={todosMemo} loading={loading}/>
+                    : <Boards todos={todosMemo} loading={loading}/>
+                }
             </div>
         </div>
 

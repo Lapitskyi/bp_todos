@@ -16,7 +16,6 @@ const Avatar: FC<AvatarProps> = ({user}) => {
 
     const letterLogo = () => {
         let name = ''
-
         if (!user.avatar) {
             name = user.name || user.username
         }

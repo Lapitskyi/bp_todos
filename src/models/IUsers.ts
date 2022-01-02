@@ -9,7 +9,7 @@ export interface IUsers {
     company:IUserCompany
 }
 
-interface IUserAddress {
+export interface IUserAddress {
     city: string,
     street:string,
     suite:string,
@@ -20,7 +20,7 @@ interface IUserAddress {
     }
 }
 
-interface IUserCompany {
+export interface IUserCompany {
     bs:string,
     catchPhrase:string,
     name:string

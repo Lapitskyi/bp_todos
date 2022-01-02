@@ -4,19 +4,24 @@ import {IUsers} from "../../../models/IUsers";
 import Preload from "../../../components/Preloader/Preload";
 import '../css/List.scss';
 
+import { ITodo } from '../../../models/ITodo';
+
 interface ListProps {
-    users: IUsers[],
-    loading: boolean
+    todos: any[],
+    loading: boolean,
 }
 
-const List: FC<ListProps> = ({users, loading}) => {
+const List: FC<ListProps> = ({todos, loading}) => {
+    const inProgressTodo = todos.filter(todo => todo.completed)
 
+    const completeTodo = todos.filter(todo => !todo.completed)
+    const sortTodo = [...completeTodo, ...inProgressTodo].map(todo => todo)
     return (
         <div className='list'>
             {loading
                 ? <Preload/>
-                : users.map((user)=> (
-                    <ListItem user={user} key={user.id}/>
+                : sortTodo.map((todo) => (
+                    <ListItem todo={todo} key={todo.id}/>
                 ))
 
             }
