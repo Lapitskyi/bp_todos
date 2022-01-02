@@ -16,7 +16,7 @@ interface ITogle {
 const Todo = () => {
     const [toggle, setToggle] = useState<boolean>(false)
     const dispatch = useAppDispatch()
-    const {users, todos, loading, error} = useAppSelector(state => state.todoReducers)
+    const {users, todos, loading, error, view} = useAppSelector(state => state.todoReducers)
 
     const todosMemo = useMemo(() => {
         return todos.map((todo: ITodo) => {
@@ -36,13 +36,13 @@ const Todo = () => {
         dispatch(requestUsers())
         dispatch(requestTodos())
     }, [])
-
+    console.log('error',error)
     return (
         <div className='todo'>
-            <input type="checkbox" checked={toggle}
-                   onChange={(e: ChangeEvent<HTMLInputElement>) => setToggle(e.target.checked)}/>
+
             <div className='container'>
-                {toggle
+                {error && 'Что-то пошло не так....'}
+                {!error && view === 'list'
                     ? < List todos={todosMemo} loading={loading}/>
                     : <Boards todos={todosMemo} loading={loading}/>
                 }

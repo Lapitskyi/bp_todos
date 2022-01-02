@@ -4,15 +4,21 @@ import {requestTodos, requestUsers} from "./todoActions";
 import {IUsers} from "../models/IUsers";
 
 interface TodoState {
-    todos: ITodo[];
+    todos: any[];
     users: IUsers[];
     loading: boolean;
     error: string;
+    view: string
+}
+
+type extendTodos = ITodo & {
+    done: boolean
 }
 
 const initialState: TodoState = {
     todos: [],
     users: [],
+    view:'',
     loading: false,
     error: ''
 };
@@ -20,14 +26,17 @@ const initialState: TodoState = {
 export const todoSlice = createSlice({
     name: 'todo',
     initialState,
-    reducers: { },
+    reducers: {
+        toggleViewsTodo(state, action){
+            state.view = action.payload
+        }
+    },
     extraReducers: {
         //Users
         [requestUsers.fulfilled.type]: (state, action: PayloadAction<IUsers[]>) => {
             state.loading = false
             state.error = ''
-            state.users = [...state.users, ...action.payload]
-
+            state.users = action.payload
         },
         [requestUsers.pending.type]: (state, action: PayloadAction<boolean>) => {
             state.loading = true
@@ -40,7 +49,7 @@ export const todoSlice = createSlice({
         [requestTodos.fulfilled.type]:(state, action:PayloadAction<ITodo[]>)=>{
             state.loading = false
             state.error = ''
-            state.todos=[...state.todos, ...action.payload]
+            state.todos=action.payload.map(item=>({...item, 'done':false}))
         },
         [requestTodos.pending.type]: (state, action: PayloadAction<boolean>) => {
             state.loading = true
@@ -51,6 +60,8 @@ export const todoSlice = createSlice({
         },
     }
 })
+
+export const {toggleViewsTodo} = todoSlice.actions
 
 export default todoSlice.reducer;
 

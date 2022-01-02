@@ -36,7 +36,13 @@ const Boards:FC<BoardProps> = ({todos, loading}) => {
             </div>
             <div className="column">
                 <div className="column-title">Done</div>
-                <div className="column-wrap"></div>
+                <div className="column-wrap">
+                    {todos.map((todo)=>(todo.done &&
+                        <div key={todo.id}>
+                            <ListItem todo={todo}/>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

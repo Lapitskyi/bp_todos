@@ -1,6 +1,32 @@
-.header{
- padding: 10px 0;
+.header {
+  padding: 10px 0;
+  background: #888888;
 
- height: 50px;
- background: #888888;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid var(--bg-dark);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    + button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.active-btn {
+
+    background-color: red;
+    color:#ffffff;
+
+
 }
