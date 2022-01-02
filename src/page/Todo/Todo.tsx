@@ -18,33 +18,36 @@ const Todo = () => {
     const dispatch = useAppDispatch()
     const {users, todos, loading, error, view} = useAppSelector(state => state.todoReducers)
 
-    const todosMemo = useMemo(() => {
+    const todosExtend = () =>{
         return todos.map((todo: ITodo) => {
             return {
                 ...todo,
-                user: users.find((user: IUsers) => {
+                user: users?.find((user: IUsers) => {
                     if (user.id === todo.userId) {
                         return user
                     }
                 })
             }
         })
+    }
 
-    }, [users, todos])
+    useEffect(()=>{
+        todosExtend()
+    },[users.length,todos.length])
 
     useEffect(() => {
         dispatch(requestUsers())
         dispatch(requestTodos())
     }, [])
-    console.log('error',error)
+
     return (
         <div className='todo'>
 
             <div className='container'>
                 {error && 'Что-то пошло не так....'}
                 {!error && view === 'list'
-                    ? < List todos={todosMemo} loading={loading}/>
-                    : <Boards todos={todosMemo} loading={loading}/>
+                    ? < List todos={todosExtend()} loading={loading}/>
+                    : <Boards todos={todosExtend()} loading={loading}/>
                 }
             </div>
         </div>

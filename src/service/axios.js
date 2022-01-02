@@ -14,6 +14,7 @@ export const API = {
             })
             .catch(err => {
                 if (err.response) {
+                    return err.response.data
                     // client never received a response, or request never left
                 } else if (err.request) {
                     // client never received a response, or request never left

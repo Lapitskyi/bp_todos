@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import ListItem from "./ListItem";
+import Item from "./Item";
 import {IUsers} from "../../../models/IUsers";
 import Preload from "../../../components/Preloader/Preload";
 import '../css/List.scss';
@@ -12,16 +12,15 @@ interface ListProps {
 }
 
 const List: FC<ListProps> = ({todos, loading}) => {
-    const inProgressTodo = todos.filter(todo => todo.completed)
-
-    const completeTodo = todos.filter(todo => !todo.completed)
-    const sortTodo = [...completeTodo, ...inProgressTodo].map(todo => todo)
+    const inProgress = todos.filter(todo => todo.completed)
+    const todo = todos.filter(todo => !todo.completed && !todo.done)
+    const done = todos.filter(todo => todo.done )
     return (
         <div className='list'>
             {loading
                 ? <Preload/>
-                : sortTodo.map((todo) => (
-                    <ListItem todo={todo} key={todo.id}/>
+                : [...todo, ...inProgress, ...done].map((todo) => (
+                    <Item todo={todo} key={todo.id}/>
                 ))
 
             }

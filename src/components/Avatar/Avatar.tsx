@@ -9,16 +9,17 @@ interface AvatarProps {
 
 const Avatar: FC<AvatarProps> = ({user}) => {
 
-    const randomColorAvatar = () =>{
+    const randomColorAvatar = () => {
         let hex = Math.floor(Math.random() * 0xFFFFFF);
         return "#" + hex.toString(16);
     }
 
     const letterLogo = () => {
         let name = ''
-        if (!user.avatar) {
+        if (user && !user.avatar) {
             name = user.name || user.username
         }
+
         if (!name) {
             return 'JD'
         }
@@ -31,7 +32,7 @@ const Avatar: FC<AvatarProps> = ({user}) => {
 
     return (
         <div className='avatar' style={{background: `${randomColorAvatar()}`}}>
-            {user.avatar
+            {user && user.avatar
                 ? <img src={user.avatar} alt="avatar"/>
                 : <span className='letter-logo'> {letterLogo()}</span>
             }

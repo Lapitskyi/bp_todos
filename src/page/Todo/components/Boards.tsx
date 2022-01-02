@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Avatar from '../../../components/Avatar/Avatar';
 import '../css/Board.scss'
-import ListItem from './ListItem';
+import Item from './Item';
 
 interface BoardProps {
     todos: any[],
@@ -16,7 +16,7 @@ const Boards:FC<BoardProps> = ({todos, loading}) => {
                 <div className="column-wrap">
                     {todos.map((todo)=>(!todo.completed &&
                         <div key={todo.id}>
-                            <ListItem todo={todo}/>
+                            <Item todo={todo}/>
                         </div>
                     ))}
 
@@ -28,7 +28,7 @@ const Boards:FC<BoardProps> = ({todos, loading}) => {
                 <div className="column-wrap">
                     {todos.map((todo)=>(todo.completed &&
                         <div key={todo.id}>
-                            <ListItem todo={todo}/>
+                            <Item todo={todo}/>
                         </div>
                     ))}
 
@@ -39,7 +39,7 @@ const Boards:FC<BoardProps> = ({todos, loading}) => {
                 <div className="column-wrap">
                     {todos.map((todo)=>(todo.done &&
                         <div key={todo.id}>
-                            <ListItem todo={todo}/>
+                            <Item todo={todo}/>
                         </div>
                     ))}
                 </div>

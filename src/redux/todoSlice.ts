@@ -29,7 +29,21 @@ export const todoSlice = createSlice({
     reducers: {
         toggleViewsTodo(state, action){
             state.view = action.payload
-        }
+        },
+        toggleStatus(state, action){
+            state.todos = state.todos.map((todo)=>{
+                if(todo.id===action.payload.id){
+                    if(action.payload.completed=== false){
+                        return {...todo, completed: true}
+                    }
+                    if(action.payload.completed=== true){
+                        delete todo.completed
+                        return {...todo, done: true }
+                    }
+                }
+                return todo
+            })
+        },
     },
     extraReducers: {
         //Users
@@ -61,7 +75,7 @@ export const todoSlice = createSlice({
     }
 })
 
-export const {toggleViewsTodo} = todoSlice.actions
+export const {toggleViewsTodo, toggleStatus} = todoSlice.actions
 
 export default todoSlice.reducer;
 
