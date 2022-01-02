@@ -12,14 +12,12 @@ interface ListProps {
 }
 
 const List: FC<ListProps> = ({todos, loading}) => {
-    const inProgress = todos.filter(todo => todo.completed)
+    const inProgress = todos.filter(todo => todo.completed  && !todo.done)
     const todo = todos.filter(todo => !todo.completed && !todo.done)
     const done = todos.filter(todo => todo.done )
     return (
         <div className='list'>
-            {loading
-                ? <Preload/>
-                : [...todo, ...inProgress, ...done].map((todo) => (
+            {[...todo, ...inProgress, ...done].map((todo) => (
                     <Item todo={todo} key={todo.id}/>
                 ))
 

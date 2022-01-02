@@ -14,7 +14,7 @@ const Boards:FC<BoardProps> = ({todos, loading}) => {
             <div className="column">
                 <div className="column-title">To do</div>
                 <div className="column-wrap">
-                    {todos.map((todo)=>(!todo.completed &&
+                    {todos.map((todo)=>((!todo.completed && !todo.done) &&
                         <div key={todo.id}>
                             <Item todo={todo}/>
                         </div>

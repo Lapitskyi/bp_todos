@@ -7,6 +7,7 @@ import Boards from "./components/Boards";
 import {IUsers} from "../../models/IUsers";
 import {ITodo} from "../../models/ITodo";
 import './css/Todo.scss'
+import Preload from "../../components/Preloader/Preload";
 
 interface ITogle {
     toggle: boolean,
@@ -18,7 +19,7 @@ const Todo = () => {
     const dispatch = useAppDispatch()
     const {users, todos, loading, error, view} = useAppSelector(state => state.todoReducers)
 
-    const todosExtend = () =>{
+    const todosExtend = () => {
         return todos.map((todo: ITodo) => {
             return {
                 ...todo,
@@ -31,9 +32,9 @@ const Todo = () => {
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         todosExtend()
-    },[users.length,todos.length])
+    }, [users.length, todos.length])
 
     useEffect(() => {
         dispatch(requestUsers())
@@ -44,10 +45,13 @@ const Todo = () => {
         <div className='todo'>
 
             <div className='container'>
-                {error && 'Что-то пошло не так....'}
-                {!error && view === 'list'
-                    ? < List todos={todosExtend()} loading={loading}/>
-                    : <Boards todos={todosExtend()} loading={loading}/>
+                {loading
+                    ? <Preload/>
+                    : error
+                        ? <div>{error}</div>
+                        : view === 'list'
+                            ? <List todos={todosExtend()} loading={loading}/>
+                            : <Boards todos={todosExtend()} loading={loading}/>
                 }
             </div>
         </div>

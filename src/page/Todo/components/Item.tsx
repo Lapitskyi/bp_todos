@@ -16,10 +16,10 @@ const Item: FC<ListItemProps> = ({todo}) => {
         dispatch(toggleStatus(todo))
     }
     return (
-        <div className='wrapper' onClick={() => onToggleStatus(todo)}>
+        <div className='wrapper' onClick={() => !todo.done ?onToggleStatus(todo) : undefined}>
             <Avatar user={todo.user }/>
             <div>{todo.title}</div>
-            <div style={{ cursor:'pointer'}}>{!todo.done ? (!todo.completed && !todo.done ? 'to do' : 'in progress') : 'done'}</div>
+            <div className={!todo.done ? 'click' : ''}>{!todo.done ? (!todo.completed && !todo.done ? 'to do' : 'in progress') : 'done'}</div>
         </div>
     );
 };
